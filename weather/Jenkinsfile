@@ -1,0 +1,13 @@
+node('dev') {
+    // Define environment variable
+    def imageName = 'edmundtetteh/movies-parser'
+    def registry = 'https://registry.slowcoder.com'
+
+    // Stage: Checkout
+    stage('Checkout') {
+        // Git checkout
+        checkout([$class: 'GitSCM', branches: [[name: 'develop']],
+                  userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
+                  credentialsId: 'ubuntu-jenkins'])
+    }
+}
