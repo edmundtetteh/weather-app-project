@@ -12,12 +12,27 @@
 //     }
 // }
 
-node('dev') {
-    stage('Checkout') {
-        checkout([$class: 'GitSCM',
-                  userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']]])
+pipeline {
+    agent {
+        label 'dev'
+    }
+
+    environment {
+        imageName = 'edmundtetteh/movies-parser'
+        registry = 'https://registry.slowcoder.com'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                          userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']],
+                          credentialsId: 'ubuntu-jenkins'])
+            }
+        }
     }
 }
+
 
 
 
