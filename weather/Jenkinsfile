@@ -13,25 +13,21 @@
 // }
 
 pipeline {
-    agent {
-        label 'dev'
-    }
-
-    environment {
-        imageName = 'edmundtetteh/movies-parser'
-        registry = 'https://registry.slowcoder.com'
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']],
-                          credentialsId: 'ubuntu-jenkins'])
-            }
-        }
-    }
+    // agent {
+    //     label ("aws-deploy")
+    //         }
+  agent any
+  environment {
+		DOCKERHUB_CREDENTIALS=credentials('github-ssh')
+	}
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        disableConcurrentBuilds()
+        timeout (time: 60, unit: 'MINUTES')
+        timestamps()
+      }
 }
+
 
 
 
