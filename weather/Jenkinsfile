@@ -13,35 +13,12 @@
 // }
 
 node('dev') {
-    // Define environment variable
-    // def imageName = 'edmundtetteh/movies-parser'
-    // def registry = 'https://registry.slowcoder.com'
-
-    // Stage: Checkout
     stage('Checkout') {
-        // Git checkout without specifying a branch (uses the default branch)
         checkout([$class: 'GitSCM',
-                  userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']],
-                  credentialsId: 'ubuntu-jenkins'])
-    }
-
-    // Other stages can be added here...
-
-    // Example stage: Build
-    stage('Build') {
-        // Build commands
-        echo 'Building the application...'
-    }
-
-    // Example stage: Test
-    stage('Test') {
-        // Test commands
-        echo 'Running tests...'
-    }
-
-    // Example stage: Deploy
-    stage('Deploy') {
-        // Deployment commands
-        echo 'Deploying the application...'
+                  userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']]])
     }
 }
+
+
+
+
