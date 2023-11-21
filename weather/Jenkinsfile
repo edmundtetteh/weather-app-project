@@ -21,7 +21,7 @@ node('dev') {
     stage('Checkout') {
         // Git checkout without specifying a branch (uses the default branch)
         checkout([$class: 'GitSCM',
-                  userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
+                  userRemoteConfigs: [[url: 'https://github.com/edmundtetteh/weather-app-project.git']],
                   credentialsId: 'ubuntu-jenkins'])
     }
 
