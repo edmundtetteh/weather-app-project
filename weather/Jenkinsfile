@@ -13,8 +13,10 @@
 // }
 
 pipeline {
-    agent any
-    
+    agent {
+        label "dev"
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('github-ssh')
     }
@@ -49,6 +51,7 @@ pipeline {
         }
     }
 }
+
 
 
 
