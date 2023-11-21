@@ -13,20 +13,43 @@
 // }
 
 pipeline {
-    // agent {
-    //     label ("aws-deploy")
-    //         }
-  agent any
-  environment {
-		DOCKERHUB_CREDENTIALS=credentials('github-ssh')
-	}
+    agent any
+    
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('github-ssh')
+    }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        timeout (time: 60, unit: 'MINUTES')
+        timeout(time: 60, unit: 'MINUTES')
         timestamps()
-      }
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                // Add your build steps here
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Add your test steps here
+                echo 'Testing...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add your deployment steps here
+                echo 'Deploying...'
+            }
+        }
+    }
 }
+
 
 
 
