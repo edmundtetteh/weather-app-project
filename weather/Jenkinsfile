@@ -8,6 +8,6 @@ node('dev') {
         // Git checkout
         checkout([$class: 'GitSCM', branches: [[name: 'develop']],
                   userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
-                  credentialsId: 'ubuntu-jenkins'])
+                  credentialsId: 'ssh-togithub'])
     }
 }
