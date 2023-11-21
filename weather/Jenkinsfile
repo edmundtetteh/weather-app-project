@@ -1,13 +1,35 @@
-node('dev') {
-    // Define environment variable
-    def imageName = 'edmundtetteh/movies-parser'
-    def registry = 'https://registry.slowcoder.com'
+// node('dev') {
+//     // Define environment variable
+//     def imageName = 'edmundtetteh/movies-parser'
+//     def registry = 'https://registry.slowcoder.com'
 
-    // Stage: Checkout
-    stage('Checkout') {
-        // Git checkout
-        checkout([$class: 'GitSCM', branches: [[name: 'develop']],
-                  userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
-                  credentialsId: 'ssh-togithub'])
+//     // Stage: Checkout
+//     stage('Checkout') {
+//         // Git checkout
+//         checkout([$class: 'GitSCM', branches: [[name: 'develop']],
+//                   userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
+//                   credentialsId: 'ssh-togithub'])
+//     }
+// }
+
+pipeline {
+    agent any
+
+    environment {
+        imageName = 'edmundtetteh/movies-parser'
+        registry = 'https://registry.slowcoder.com'
+        gitCredentialId = 'ssh-togithub' // The ID of your Git credentials in Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: 'develop']],
+                              userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
+                              credentialsId: gitCredentialId])
+                }
+            }
+        }
     }
 }
