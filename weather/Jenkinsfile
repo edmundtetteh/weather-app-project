@@ -12,23 +12,22 @@
 //     }
 // }
 
+
 pipeline {
-    agent any
+    agent {
+        label 'dev'
+    }
 
     environment {
         imageName = 'edmundtetteh/movies-parser'
         registry = 'https://registry.slowcoder.com'
-        gitCredentialId = 'ssh-togithub' // The ID of your Git credentials in Jenkins
     }
 
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    checkout([$class: 'GitSCM', branches: [[name: 'develop']],
-                              userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']],
-                              credentialsId: gitCredentialId])
-                }
+                checkout([$class: 'GitSCM', branches: [[name: 'develop']],
+                          userRemoteConfigs: [[url: 'git@github.com:edmundtetteh/weather-app-project.git']]])
             }
         }
     }
