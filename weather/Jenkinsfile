@@ -32,7 +32,9 @@ pipeline {
         stage('Build auth') {
             steps {
                 sh '''
-                cd $WORKSPACE/weatherapp-project/weather-app-project/auth
+                // cd $WORKSPACE/weatherapp-project/weather-app-project/auth
+                ls -la /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weatherapp-project/weather-app-project/auth
+
                 docker build -t edmundtetteh/weatherapp-auth:${BUILD_NUMBER} .
                    '''
                 
