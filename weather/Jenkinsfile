@@ -50,7 +50,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Add your test steps here
+                // Add your test steps
                 echo 'Testing...'
             }
         }
