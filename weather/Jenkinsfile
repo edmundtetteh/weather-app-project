@@ -29,12 +29,24 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Build auth') {
             steps {
-                // Add your build steps here
-                echo 'Building...'
+                sh '''
+                cd $WORKSPACE/weatherapp-project/weather-app-project/auth
+                docker build -t edmundtetteh/weatherapp-auth:${BUILD_NUMBER} .
+                   '''
+                
             }
         }
+        
+
+        // stage('Test auth') {
+	    //  agent {
+        //     docker {
+        //       image 'golang:alpine'
+        //       args '-u root:root'
+        //     }
+        // }
 
         stage('Test') {
             steps {
