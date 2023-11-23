@@ -52,19 +52,7 @@ pipeline {
             }
         }
 
-//         stage('Login') {
-//     steps {
-//         withCredentials([usernamePassword(credentialsId: 'dockerhubnew', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
-//             script {
-//                 def loginCommand = "docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                 def loginStatus = sh(script: loginCommand, input: "echo $DOCKERHUB_CREDENTIALS_PSW", returnStatus: true)
-//                 if (loginStatus != 0) {
-//                     error "Docker login failed"
-//                 }
-//             }
-//         }
-//     }
-// }
+
 
             stage('Push auth') {
                 when{ 
@@ -78,15 +66,44 @@ pipeline {
                     }
            }
         
-              
+        stage('Build UI') {
+            steps {
+                sh '''
+            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/UI
+            docker build -t edmundtetteh/weatherapp-ui:${BUILD_NUMBER} .
+                '''
+            }
+        }
+        stage('Push UI ') {
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+             docker push edmundtetteh/weatherapp-ui:${BUILD_NUMBER}
+                '''
+            }
+        }
+        stage('Build Weather') {
+            steps {
+                sh '''
+            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weather
+            docker build -t edmundtetteh/weatherapp-weather:${BUILD_NUMBER} .
+                '''
+            }
+        }
+        stage('Push weather') {
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+             docker push edmundtetteh/weatherapp-weather:${BUILD_NUMBER}
+                '''
+            } 
 
-        // stage('Test auth') {
-	    //  agent {
-        //     docker {
-        //       image 'golang:alpine'
-        //       args '-u root:root'
-        //     }
-        // }
 
 
         stage('Test') {
