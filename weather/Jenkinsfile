@@ -38,17 +38,17 @@ pipeline {
                 
             }
         }
-            stage('Push auth') {
-                when{ 
-                expression {
-                    branch 'develop' }
-                    }
-                    steps {
-                        sh '''
-                    docker push edmundtetteh/weatherapp-auth:${BUILD_NUMBER}
-                        '''
-                    }
-           }
+        //     stage('Push auth') {
+        //         when{ 
+        //         expression {
+        //             branch 'develop' }
+        //             }
+        //             steps {
+        //                 sh '''
+        //             docker push edmundtetteh/weatherapp-auth:${BUILD_NUMBER}
+        //                 '''
+        //             }
+        //    }
         
               
 
@@ -59,6 +59,16 @@ pipeline {
         //       args '-u root:root'
         //     }
         // }
+
+        stage('confirm branch') {
+            steps {
+                sh '''
+                    git rev-parse --abbrev-ref HEAD
+
+                   '''
+                
+            }
+        }
 
         stage('Test') {
             steps {
