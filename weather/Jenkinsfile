@@ -36,6 +36,12 @@ pipeline {
 
 
     stages {
+        stage('Login') {
+
+        steps {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password'
+            }
+        }
         stage('Build auth') {
             steps {
                 sh '''
@@ -45,26 +51,20 @@ pipeline {
                 
             }
         }
-        // stage('Login') {
 
-        // steps {
-        //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password'
-        //     }
-        // }
-
-        stage('Login') {
-    steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhubnew', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
-            script {
-                def loginCommand = "docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                def loginStatus = sh(script: loginCommand, input: "echo $DOCKERHUB_CREDENTIALS_PSW", returnStatus: true)
-                if (loginStatus != 0) {
-                    error "Docker login failed"
-                }
-            }
-        }
-    }
-}
+//         stage('Login') {
+//     steps {
+//         withCredentials([usernamePassword(credentialsId: 'dockerhubnew', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
+//             script {
+//                 def loginCommand = "docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+//                 def loginStatus = sh(script: loginCommand, input: "echo $DOCKERHUB_CREDENTIALS_PSW", returnStatus: true)
+//                 if (loginStatus != 0) {
+//                     error "Docker login failed"
+//                 }
+//             }
+//         }
+//     }
+// }
 
             stage('Push auth') {
                 when{ 
