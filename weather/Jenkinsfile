@@ -33,15 +33,23 @@ pipeline {
             steps {
                 sh '''
                 cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/auth
-                ls
-                
+                docker build -t edmundtetteh/weatherapp-auth:${BUILD_NUMBER} .
                    '''
                 
             }
-        }
-                        // ls -la /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weatherapp-project/weather-app-project/auth
-                // ls -ld /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weatherapp-project/weather-app-project/auth
-                // docker build -t edmundtetteh/weatherapp-auth:${BUILD_NUMBER} .
+                stage('Push auth') {
+                    when{ 
+                    expression {
+                        env.GIT_BRANCH == 'origin/develop' }
+                        }
+                        steps {
+                            sh '''
+                        docker push edmundtetteh/weatherapp-auth:${BUILD_NUMBER}
+                            '''
+                        }
+           }
+        
+              
 
         // stage('Test auth') {
 	    //  agent {
