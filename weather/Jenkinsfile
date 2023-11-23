@@ -39,10 +39,10 @@ pipeline {
             }
         }
             stage('Push auth') {
-                // when{ 
-                // expression {
-                //     env.GIT_BRANCH == 'origin/develop' }
-                //     }
+                when{ 
+                expression {
+                    branch 'develop' }
+                    }
                     steps {
                         sh '''
                     docker push edmundtetteh/weatherapp-auth:${BUILD_NUMBER}
