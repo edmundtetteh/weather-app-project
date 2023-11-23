@@ -21,9 +21,9 @@ pipeline {
 	}
     
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('github-ssh')
-    }
+    // environment {
+    //     DOCKERHUB_CREDENTIALS = credentials('github-ssh')
+    // }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -31,6 +31,14 @@ pipeline {
         timeout(time: 60, unit: 'MINUTES')
         timestamps()
     }
+
+
+    stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
 
     stages {
         stage('Build auth') {
