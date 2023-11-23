@@ -103,6 +103,26 @@ pipeline {
              docker push edmundtetteh/weatherapp-weather:${BUILD_NUMBER}
                 '''
             }
+        }
+
+        stage('Build Redis') {
+            steps {
+                sh '''
+            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weather
+            docker build -t edmundtetteh/weatherapp-redis:${BUILD_NUMBER} .
+                '''
+            }
+        }
+        stage('Push Redis') {
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+             docker push edmundtetteh/weatherapp-redis:${BUILD_NUMBER}
+                '''
+            }
         } 
 
 
