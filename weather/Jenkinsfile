@@ -37,6 +37,7 @@ pipeline {
                    '''
                 
             }
+        }
             stage('Push auth') {
                 // when{ 
                 // expression {
@@ -44,7 +45,6 @@ pipeline {
                 //     }
                     steps {
                         sh '''
-                    cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/auth
                     docker push edmundtetteh/weatherapp-auth:${BUILD_NUMBER}
                         '''
                     }
