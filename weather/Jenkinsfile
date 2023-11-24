@@ -192,7 +192,8 @@ cat <<EOF > docker-compose.yml
   
     weather:
       container_name: weatherapp-weather
-      image: edmundtetteh/weatherapp-weather:${BUILD_NUMBER}
+    //    image: edmundtetteh/weatherapp-weather:${BUILD_NUMBER}
+      image: devopseasylearning/thomisis-weather:v0.0.1
       expose:
         - 5000
       environment:
