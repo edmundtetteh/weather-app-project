@@ -108,7 +108,7 @@ pipeline {
         stage('Build Redis') {
             steps {
                 sh '''
-            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/weather
+            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/redis
             docker build -t edmundtetteh/weatherapp-redis:${BUILD_NUMBER} .
                 '''
             }
@@ -121,6 +121,25 @@ pipeline {
             steps {
                 sh '''
              docker push edmundtetteh/weatherapp-redis:${BUILD_NUMBER}
+                '''
+            }
+        }
+        stage('Build db') {
+            steps {
+                sh '''
+            cd /home/ubuntu/workspace/edmund-work-space/WEATHERAPP/WEATHERAPP/db
+            docker build -t edmundtetteh/weatherapp-db:${BUILD_NUMBER} .
+                '''
+            }
+        }
+        stage('Push db') {
+         when{ 
+          expression {
+            env.GIT_BRANCH == 'origin/develop' }
+            }
+            steps {
+                sh '''
+             docker push edmundtetteh/weatherapp-db:${BUILD_NUMBER}
                 '''
             }
         } 
